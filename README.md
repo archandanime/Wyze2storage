@@ -1,6 +1,4 @@
-**Abandoned !**
-Powered by Entware !
-
+**Abandoned**
 
 ## Features
 - SSH and SFTP
