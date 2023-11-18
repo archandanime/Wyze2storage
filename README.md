@@ -1,6 +1,4 @@
-**wyze2storage**
-
-Still a work in process !
+**Abandoned !**
 Powered by Entware !
 
 
