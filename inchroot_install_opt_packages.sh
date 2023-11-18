@@ -29,8 +29,20 @@ opt_prepare() {
 
 	msg "Creating directories"
 	for dir in bin etc lib/opkg tmp var/lock; do
-		submsg "/opt/${dir}"
+		submsg "/opt/${dir}" && echo "done"
 		mkdir -p  /opt/${dir}
+	done
+
+	msg "Creating symlinks in /opt/etc"
+	for etc_file in  passwd group shells shadow profile; do
+		if [ -f /etc/${etc_file} ]; then
+			if [ ! -L /opt/etc/$etc_file ]; then
+				submsg "/opt/etc/${etc_file} -> /etc/${etc_file} ... done"
+				ln -sf /etc/$etc_file /opt/etc/$etc_file
+			else
+				submsg "/opt/etc/${etc_file} -> /etc/${etc_file} ... already done"
+			fi
+		fi
 	done
 
 	msg "Downloading and configuring opkg"
@@ -72,8 +84,6 @@ opt_cleanup() {
 	msg "Removing /tmp/resolv.conf"
 	rm /tmp/resolv.conf
 
-	echo "Chmoding /opt to be writable by user 1000"
-	chown 1000:1000 -R /opt
 }
 
 
